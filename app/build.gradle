@@ -1,0 +1,89 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.2"
+    defaultConfig {
+        applicationId "com.example.mvvmjavadagger"
+        minSdkVersion 21
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
+}
+buildscript {
+    ext.lifecycle_version = '2.0.0'
+    ext.OkHttpInterceptor_Version = '3.12.0'
+    ext.gson_version = '2.4.0'
+    ext.retrofit_version = '2.4.0'
+    ext.rxkotlin_Version = '2.3.0'
+    ext.rxJava_Version = '2.2.2'
+    ext.rxAndroid_Version = '2.1.1'
+    ext.dagger2_version = '2.16'
+    ext.androidX_Version = '1.0.0'
+    ext.recyclerView_Version = '1.1.0-beta01'
+    ext.lottieVersion = '3.0.0'
+    ext.timber_Version = '4.7.1'
+    ext.materialDesign_Version = '1.1.0-alpha07'
+    ext.butterknife = '10.2.0'
+    ext.butterKnifeCompiler = '10.2.0'
+    ext.koin_version = '2.0.1'
+    ext.Glide_version = '4.9.0'
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:runner:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+
+    // LiveData & ViewModel
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
+
+    // Support Design
+    implementation "androidx.cardview:cardview:$androidX_Version"
+    implementation "com.google.android.material:material:$materialDesign_Version"
+
+    // RecyclerView
+    implementation "androidx.recyclerview:recyclerview:$recyclerView_Version"
+
+    // Retrofit
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$gson_version"
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
+    implementation 'com.google.code.gson:gson:2.8.5'
+
+    //Rx
+
+    implementation "io.reactivex.rxjava2:rxandroid:$rxAndroid_Version"
+    implementation "io.reactivex.rxjava2:rxjava:$rxJava_Version"
+
+    //OkHTTP Logging Interceptor
+    implementation "com.squareup.okhttp3:logging-interceptor:$OkHttpInterceptor_Version"
+
+    implementation "com.github.bumptech.glide:glide:$Glide_version"
+    annotationProcessor "com.github.bumptech.glide:compiler:$Glide_version"
+
+
+    implementation "com.jakewharton:butterknife:$butterknife"
+    annotationProcessor "com.jakewharton:butterknife-compiler:$butterKnifeCompiler"
+
+
+    implementation "com.google.dagger:dagger:$dagger2_version"
+    annotationProcessor "com.google.dagger:dagger-compiler:$dagger2_version"
+    implementation "com.google.dagger:dagger-android:$dagger2_version"
+    annotationProcessor "com.google.dagger:dagger-android-processor:$dagger2_version"
+}
