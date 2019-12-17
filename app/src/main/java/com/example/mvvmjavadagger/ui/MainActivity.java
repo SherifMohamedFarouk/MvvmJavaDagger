@@ -11,14 +11,18 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mvvmjavadagger.R;
+import com.example.mvvmjavadagger.di.factory.CatsViewModelFactory;
 import com.example.mvvmjavadagger.models.CatModel;
 import com.example.mvvmjavadagger.models.Response;
 import com.example.mvvmjavadagger.viewmodel.ActivityViewModel;
 
 import java.util.ArrayList;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import dagger.android.AndroidInjection;
 
 import static com.example.mvvmjavadagger.models.enums.Status.LOADING;
 import static com.example.mvvmjavadagger.models.enums.Status.SUCCESS;
@@ -31,19 +35,23 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.catsRecyclerView)
     RecyclerView catsRecyclerView;
 
+    @Inject
+    CatsViewModelFactory viewModelFactory;
+
     CatAdapter catAdapter = new CatAdapter(new ArrayList<>());
 
-    ActivityViewModel activityViewModel = new ActivityViewModel();
+    ActivityViewModel activityViewModel ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        AndroidInjection.inject(this);
         ButterKnife.bind(this);
         // initializing recyclerview with required parameters
         initiateRecyclerView();
         // initiate ViewModel
-//        initiateViewModel();
+        initiateViewModel();
         // initiate Observer
         initiateObservers();
         // initiate call of network to get the cats
@@ -60,10 +68,10 @@ public class MainActivity extends AppCompatActivity {
         catsRecyclerView.setAdapter(catAdapter);
     }
 
-//    private void initiateViewModel() {
-//        // this is how we initialize viewModel
-//        activityViewModel = ViewModelProviders.of(this, activityViewModel).get(activityViewModel.class);
-//    }
+    private void initiateViewModel() {
+        // this is how we initialize viewModel
+        activityViewModel = ViewModelProviders.of(this, viewModelFactory).get(ActivityViewModel.class);
+    }
 
     private void initiateObservers() {
 

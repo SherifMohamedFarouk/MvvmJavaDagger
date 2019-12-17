@@ -5,6 +5,7 @@ import android.view.View;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.mvvmjavadagger.di.usecases.LoadCatsUseCase;
 import com.example.mvvmjavadagger.models.Response;
 import com.example.mvvmjavadagger.repositories.CatRepositery;
 
@@ -15,17 +16,22 @@ import io.reactivex.schedulers.Schedulers;
 
 public class ActivityViewModel extends ViewModel {
 
-    CatRepositery catRepositery = new CatRepositery() ;
+
 
     Disposable compositeDisposable = new CompositeDisposable();
-
+    private  final LoadCatsUseCase loadCatsUseCase ;
     public MutableLiveData<Response> response = new MutableLiveData<>();
     public MutableLiveData<Integer>  progressBarVisibility = new MutableLiveData<>();
+
+    public ActivityViewModel(LoadCatsUseCase loadCatsUseCase){
+        this.loadCatsUseCase = loadCatsUseCase;
+
+    }
 
 
 
     public void getCats(){
-        compositeDisposable = catRepositery.getCats(3)
+        compositeDisposable = loadCatsUseCase.execute()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnComplete(this::doOnComplete).
